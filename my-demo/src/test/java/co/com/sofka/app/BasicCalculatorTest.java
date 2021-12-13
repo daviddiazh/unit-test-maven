@@ -40,18 +40,74 @@ public class BasicCalculatorTest {
     }
 
     @Test
-    @DisplayName("Testing subtract: 1-1=1")
+    @DisplayName("Testing subtract: 1-1=0")
     public void subtract() {
         // Arrange
         Long number1 = 1L;
         Long number2 = 1L;
-        Long expectedValue = 2L;
+        Long expectedValue = 0L;
 
         // Act
         Long result = basicCalculator.subtract(number1, number2);
 
         // Assert
         assertEquals(expectedValue, result);
+    }
+
+    @Test
+    @DisplayName("Testing mul: 3*2=6")
+    void mul() {
+        // Arrange
+        Long number1 = 3L;
+        Long number2 = 2L;
+        Long expectedValue = 6L;
+
+        // Act
+        Long result = basicCalculator.multiply(number1, number2);
+
+        // Assert
+        assertEquals(expectedValue, result);
+    }
+
+    @DisplayName("Testing several muls")
+    @ParameterizedTest(name = "{0} * {1} = {2}")
+    @CsvSource({
+            "0,    1,   0",
+            "1,    2,   2",
+            "49,  51, 2499",
+            "1,  100, 100"
+    })
+    public void severalMuls(Long first, Long second, Long expectedResult) {
+        assertEquals(expectedResult, basicCalculator.multiply(first, second),
+                () -> first + " * " + second + " should equal " + expectedResult);
+    }
+
+    @Test
+    @DisplayName("Testing div: 6/2=3")
+    void div() {
+        // Arrange
+        Double number1 = 6D;
+        Double number2 = 2D;
+        Double expectedValue = 3D;
+
+        // Act
+        Double result = basicCalculator.divide(number1, number2);
+
+        // Assert
+        assertEquals(expectedValue, result);
+    }
+
+    @DisplayName("Testing several divs")
+    @ParameterizedTest(name = "{0} / {1} = {2}")
+    @CsvSource({
+            "0,    1,   0",
+            "1,    2,   0.5",
+            "75,  3, 25",
+            "5,  2, 2.5"
+    })
+    public void severalDivs(Double first, Double second, Double expectedResult) {
+        assertEquals(expectedResult, basicCalculator.divide(first, second),
+                () -> first + " / " + second + " should equal " + expectedResult);
     }
 
 }
